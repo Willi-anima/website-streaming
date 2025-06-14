@@ -1,70 +1,79 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Layar Film Streaming</title>
-  <meta name="description" content="Streaming semua film dari satu channel Dailymotion. Nonton gratis langsung di browser!" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #eee;
-      margin: 0;
-      padding: 0;
-    }
-    header, footer {
-      background: #222;
-      padding: 1em;
-      text-align: center;
-    }
-    main {
-      padding: 1em;
-    }
-    iframe {
-      width: 100%;
-      height: 500px;
-      border: none;
-    }
-    h1 {
-      color: #f90;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layar Film - Animatime</title>
+  <link rel="stylesheet" href="style.css">
 
-  <!-- Iklan Adsterra Banner -->
-  <script type="text/javascript">
+  <!-- Adsterra Ads -->
+  <script type='text/javascript'>
     atOptions = {
-      'key' : 'g0wexamplekeyxx13z',
-      'format' : 'iframe',
+      'key' : 'your-adsterra-key',
+      'format' : 'banner',
       'height' : 90,
       'width' : 728,
       'params' : {}
     };
-    document.write('<scr' + 'ipt type="text/javascript" src="//www.profitabledisplaynetwork.com/' + atOptions.key + '/invoke.js"></scr' + 'ipt>');
+    document.write('<script type="text/javascript" src="//www.profitabledisplaynetwork.com/'+atOptions.key+'/invoke.js"><\/script>');
   </script>
 </head>
 <body>
 
   <header>
-    <h1>Layar Film Streaming</h1>
-    <p>Nonton semua film langsung dari channel resmi Dailymotion</p>
+    <h1>🎬 Layar Film - Channel Animatime</h1>
+    <p>Nonton film gratis langsung dari channel Dailymotion</p>
   </header>
 
-  <main>
-    <!-- Ganti nama channel dengan milik kamu -->
-      <iframe 
-        src="https://www.dailymotion.com/embed/user/animatime" 
-        width="100%" 
-        height="500" 
-        allowfullscreen 
-        allow="autoplay">
-      </iframe>
-  </main>
+  <div class="ad-container">
+    <div id="ad1"></div>
+  </div>
 
-  <footer>
-    <p>&copy; 2025 Layar Film | Powered by GitHub Pages</p>
-  </footer>
+  <div id="videos"></div>
+
+  <div class="pagination">
+    <button onclick="changePage(-1)">Sebelumnya</button>
+    <button onclick="changePage(1)">Berikutnya</button>
+  </div>
+
+  <div class="ad-container">
+    <div id="ad2"></div>
+  </div>
+
+  <script>
+    const username = "animatime";
+    let currentPage = 1;
+    const limit = 10;
+
+    function fetchVideos(page) {
+      fetch(`https://api.dailymotion.com/user/${username}/videos?limit=${limit}&page=${page}`)
+        .then(res => res.json())
+        .then(data => {
+          const videos = data.list;
+          const container = document.getElementById("videos");
+          container.innerHTML = "";
+
+          if (!videos.length) {
+            container.innerHTML = "<p>Tidak ada video ditemukan.</p>";
+            return;
+          }
+
+          videos.forEach(video => {
+            const iframe = document.createElement("iframe");
+            iframe.src = `https://www.dailymotion.com/embed/video/${video.id}`;
+            container.appendChild(iframe);
+          });
+        });
+    }
+
+    function changePage(direction) {
+      currentPage += direction;
+      if (currentPage < 1) currentPage = 1;
+      fetchVideos(currentPage);
+    }
+
+    fetchVideos(currentPage);
+  </script>
 
 </body>
 </html>
