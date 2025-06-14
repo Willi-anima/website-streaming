@@ -1,0 +1,64 @@
+body {
+  background-color: #111;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #222;
+  padding: 20px;
+  text-align: center;
+  color: #f9c74f;
+}
+
+h1 {
+  margin: 0;
+}
+
+#ad1, #ad2 {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#ad1 script, #ad2 script {
+  display: block;
+  margin: 0 auto;
+}
+
+#videos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+iframe {
+  width: 300px;
+  height: 170px;
+  border: none;
+}
+
+.pagination {
+  text-align: center;
+  margin: 20px;
+}
+
+.pagination button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  background-color: #f9c74f;
+  border: none;
+  color: #111;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.ad-container {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+}
