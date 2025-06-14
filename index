@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Layar Stream</title>
+</head>
+<body>
+  <h1>Selamat Datang di Layar Stream</h1>
+  <p>Nonton Film Gratis</p>
+
+  <iframe 
+    width="100%" 
+    height="400" 
+    src="https://www.dailymotion.com/AnimaTime" 
+    allowfullscreen
+    frameborder="0">
+  </iframe>
+
+  <p>Powered by GitHub Pages</p>
+</body>
+</html>
