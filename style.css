@@ -17,16 +17,6 @@ h1 {
   margin: 0;
 }
 
-#ad1, #ad2 {
-  margin-top: 20px;
-  text-align: center;
-}
-
-#ad1 script, #ad2 script {
-  display: block;
-  margin: 0 auto;
-}
-
 #videos {
   display: flex;
   flex-wrap: wrap;
@@ -47,14 +37,19 @@ iframe {
 }
 
 .pagination button {
-  padding: 10px 20px;
-  margin: 0 5px;
+  padding: 8px 15px;
+  margin: 0 4px;
   background-color: #f9c74f;
   border: none;
   color: #111;
   font-weight: bold;
   cursor: pointer;
   border-radius: 5px;
+}
+
+.pagination button.active {
+  background-color: #fff;
+  color: #000;
 }
 
 .ad-container {
