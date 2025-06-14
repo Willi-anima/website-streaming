@@ -8,8 +8,10 @@
 </head>
 <body>
   <header>
-    <h1> Layar Film </h1>
+      <h1><a href="index.html">Layar Film</a></h1>
+      <button id="theme-toggle">🌙/☀️</button>
   </header>
+
 
   <div id="gallery" class="gallery"></div>
 
@@ -72,5 +74,21 @@
 
     fetchTotalVideos();
   </script>
+  <script>
+  // Theme switch
+  const toggle = document.getElementById("theme-toggle");
+  const currentTheme = localStorage.getItem("theme") || "dark";
+  document.body.className = currentTheme;
+
+  toggle.textContent = currentTheme === "dark" ? "☀️" : "🌙";
+
+  toggle.onclick = () => {
+    const newTheme = document.body.className === "dark" ? "light" : "dark";
+    document.body.className = newTheme;
+    localStorage.setItem("theme", newTheme);
+    toggle.textContent = newTheme === "dark" ? "☀️" : "🌙";
+  };
+</script>
+
 </body>
 </html>
