@@ -1,16 +1,44 @@
 body {
+  margin: 0;
+  font-family: sans-serif;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark {
   background: #111;
   color: #fff;
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
+}
+
+body.light {
+  background: #fff;
+  color: #111;
 }
 
 header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: #222;
   padding: 20px;
-  text-align: center;
   color: #f9c74f;
+}
+
+body.light header {
+  background: #f0f0f0;
+  color: #222;
+}
+
+header h1 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: inherit;
 }
 
 .gallery {
@@ -30,6 +58,10 @@ header {
   transition: 0.3s;
 }
 
+body.light .card {
+  background: #eee;
+}
+
 .card:hover {
   transform: scale(1.05);
 }
@@ -43,6 +75,10 @@ header {
   font-size: 16px;
   margin: 10px;
   color: #f9c74f;
+}
+
+body.light .card h3 {
+  color: #333;
 }
 
 .video-detail {
@@ -60,6 +96,10 @@ header {
 
 .video-detail h2 {
   color: #f9c74f;
+}
+
+body.light .video-detail h2 {
+  color: #222;
 }
 
 .pagination {
@@ -80,4 +120,9 @@ header {
 .pagination button.active {
   background: #fff;
   color: #111;
+}
+
+body.light .pagination button.active {
+  background: #222;
+  color: #fff;
 }
