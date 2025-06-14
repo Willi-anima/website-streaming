@@ -5,18 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Layar Film - Animatime</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Adsterra Ads -->
-  <script type='text/javascript'>
-    atOptions = {
-      'key' : 'your-adsterra-key',
-      'format' : 'banner',
-      'height' : 90,
-      'width' : 728,
-      'params' : {}
-    };
-    document.write('<script type="text/javascript" src="//www.profitabledisplaynetwork.com/'+atOptions.key+'/invoke.js"><\/script>');
-  </script>
 </head>
 <body>
 
@@ -26,53 +14,78 @@
   </header>
 
   <div class="ad-container">
+    <!-- Iklan atas -->
     <div id="ad1"></div>
   </div>
 
   <div id="videos"></div>
 
-  <div class="pagination">
-    <button onclick="changePage(-1)">Sebelumnya</button>
-    <button onclick="changePage(1)">Berikutnya</button>
-  </div>
+  <div class="pagination" id="pagination"></div>
 
   <div class="ad-container">
+    <!-- Iklan bawah -->
     <div id="ad2"></div>
   </div>
 
   <script>
     const username = "animatime";
-    let currentPage = 1;
     const limit = 10;
+    let totalVideos = 0;
+    let currentPage = 1;
+
+    function fetchTotalVideosAndRenderFirstPage() {
+      fetch(`https://api.dailymotion.com/user/${username}/videos?limit=1`)
+        .then(res => res.json())
+        .then(data => {
+          totalVideos = data.total;
+          renderPagination();
+          fetchVideos(currentPage);
+        });
+    }
 
     function fetchVideos(page) {
       fetch(`https://api.dailymotion.com/user/${username}/videos?limit=${limit}&page=${page}`)
         .then(res => res.json())
         .then(data => {
-          const videos = data.list;
           const container = document.getElementById("videos");
           container.innerHTML = "";
 
-          if (!videos.length) {
-            container.innerHTML = "<p>Tidak ada video ditemukan.</p>";
-            return;
-          }
-
-          videos.forEach(video => {
+          data.list.forEach(video => {
             const iframe = document.createElement("iframe");
-            iframe.src = `https://www.dailymotion.com/embed/video/${video.id}`;
+            iframe.src = `https://www.dailymotion.com/embed/video/${video.id}?autoplay=0`;
+            iframe.setAttribute("allow", "fullscreen");
             container.appendChild(iframe);
           });
+
+          currentPage = page;
         });
     }
 
-    function changePage(direction) {
-      currentPage += direction;
-      if (currentPage < 1) currentPage = 1;
-      fetchVideos(currentPage);
+    function renderPagination() {
+      const totalPages = Math.ceil(totalVideos / limit);
+      const paginationContainer = document.getElementById("pagination");
+      paginationContainer.innerHTML = "";
+
+      for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement("button");
+        button.innerText = i;
+        if (i === currentPage) button.classList.add("active");
+        button.onclick = () => {
+          fetchVideos(i);
+          highlightPage(i);
+        };
+        paginationContainer.appendChild(button);
+      }
     }
 
-    fetchVideos(currentPage);
+    function highlightPage(pageNum) {
+      const buttons = document.querySelectorAll(".pagination button");
+      buttons.forEach(btn => btn.classList.remove("active"));
+      buttons[pageNum - 1].classList.add("active");
+    }
+
+    // Inisialisasi
+    fetchTotalVideosAndRenderFirstPage();
   </script>
 
 </body>
