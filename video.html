@@ -30,5 +30,20 @@
         `;
       });
   </script>
+  <script>
+  // Theme switch
+  const toggle = document.getElementById("theme-toggle");
+  const currentTheme = localStorage.getItem("theme") || "dark";
+  document.body.className = currentTheme;
+
+  toggle.textContent = currentTheme === "dark" ? "☀️" : "🌙";
+
+  toggle.onclick = () => {
+    const newTheme = document.body.className === "dark" ? "light" : "dark";
+    document.body.className = newTheme;
+    localStorage.setItem("theme", newTheme);
+    toggle.textContent = newTheme === "dark" ? "☀️" : "🌙";
+  };
+</script>
 </body>
 </html>
