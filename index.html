@@ -1,31 +1,19 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Layar Film - Animatime</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layar Film - Daftar Film</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <header>
-    <h1>🎬 Layar Film - Channel Animatime</h1>
-    <p>Nonton film gratis langsung dari channel Dailymotion</p>
+    <h1>🎬 Layar Film - Daftar Film</h1>
   </header>
 
-  <div class="ad-container">
-    <!-- Iklan atas -->
-    <div id="ad1"></div>
-  </div>
-
-  <div id="videos"></div>
+  <div id="gallery" class="gallery"></div>
 
   <div class="pagination" id="pagination"></div>
-
-  <div class="ad-container">
-    <!-- Iklan bawah -->
-    <div id="ad2"></div>
-  </div>
 
   <script>
     const username = "animatime";
@@ -33,7 +21,7 @@
     let totalVideos = 0;
     let currentPage = 1;
 
-    function fetchTotalVideosAndRenderFirstPage() {
+    function fetchTotalVideos() {
       fetch(`https://api.dailymotion.com/user/${username}/videos?limit=1`)
         .then(res => res.json())
         .then(data => {
@@ -44,20 +32,23 @@
     }
 
     function fetchVideos(page) {
-      fetch(`https://api.dailymotion.com/user/${username}/videos?limit=${limit}&page=${page}`)
+      fetch(`https://api.dailymotion.com/user/${username}/videos?limit=${limit}&page=${page}&fields=id,title,thumbnail_720_url`)
         .then(res => res.json())
         .then(data => {
-          const container = document.getElementById("videos");
+          const container = document.getElementById("gallery");
           container.innerHTML = "";
 
           data.list.forEach(video => {
-            const iframe = document.createElement("iframe");
-            iframe.src = `https://www.dailymotion.com/embed/video/${video.id}?autoplay=0`;
-            iframe.setAttribute("allow", "fullscreen");
-            container.appendChild(iframe);
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+              <a href="video.html?id=${video.id}">
+                <img src="${video.thumbnail_720_url}" alt="${video.title}">
+                <h3>${video.title}</h3>
+              </a>
+            `;
+            container.appendChild(card);
           });
-
-          currentPage = page;
         });
     }
 
@@ -71,22 +62,15 @@
         button.innerText = i;
         if (i === currentPage) button.classList.add("active");
         button.onclick = () => {
+          currentPage = i;
           fetchVideos(i);
-          highlightPage(i);
+          renderPagination();
         };
         paginationContainer.appendChild(button);
       }
     }
 
-    function highlightPage(pageNum) {
-      const buttons = document.querySelectorAll(".pagination button");
-      buttons.forEach(btn => btn.classList.remove("active"));
-      buttons[pageNum - 1].classList.add("active");
-    }
-
-    // Inisialisasi
-    fetchTotalVideosAndRenderFirstPage();
+    fetchTotalVideos();
   </script>
-
 </body>
 </html>
