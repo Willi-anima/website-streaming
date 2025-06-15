@@ -105,10 +105,10 @@ function setupTheme() {
 }
 
 const sliderImages = [
-  "gambar/keramat2.jpg",
-  "gambar/ketindihan.jpg",
-  "gambar/pengantiniblis.jpg",
-  "gambar/pengantinsetan.jpg"
+  "keramat2.jpg",
+  "ketindihan.jpg",
+  "pengantiniblis.jpg",
+  "pengantinsetan.jpg"
 ];
 let currentImage = 0;
 
