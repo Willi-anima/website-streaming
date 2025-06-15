@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LayarFilm - Streaming Gratis</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body id="body">
+  <header class="main-header">
+    <a href="index.html" class="logo-link">
+      <img src="gambar/layarfilm.png" alt="LayarFilm" class="logo" />
+    </a>
+    <form class="search-form" onsubmit="return false;">
+      <input type="text" id="searchInput" placeholder="Cari film..." autocomplete="off" />
+      <button type="submit">Cari</button>
+      <ul id="autocompleteList" class="autocomplete-list"></ul>
+    </form>
+    <label class="switch">
+      <input type="checkbox" id="themeToggle">
+      <span class="slider"></span>
+    </label>
+  </header>
+
+  <div class="info-bar">
+    <marquee><strong>LAYARFILM.XYZ</strong> | Streaming film subtitle Indonesia. Jangan Lupa Bookmark Agar Tidak Ketinggalan Update Film Terbaru! Selamat Menonton dan Enjoy 🎥🍿</marquee>
+  </div>
+
+  <div class="container">
+    <div class="genre-filter" id="genreFilter">
+      <button data-genre="all">Semua</button>
+      <button data-genre="horor">Horor</button>
+      <button data-genre="komedi">Komedi</button>
+      <button data-genre="romantis">Romantis</button>
+      <button data-genre="action">Action</button>
+      <button data-genre="drama">Drama</button>
+    </div>
+    <section class="hero-slider">
+      <img id="heroImage" src="gambar/almarhum.jpg" alt="Film Pilihan" />
+    </section>
+    <section class="gallery" id="videoList"></section>
+    <div id="pagination" class="pagination"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+<footer class="main-footer">
+  <div class="footer-container">
+    <div class="footer-text">
+      <p>&copy; 2025 LayarFilm. All rights reserved.</p>
+      <p>Developed by <a href="mailto:layarfilm.dev@gmail.com">layarfilm.dev@gmail.com</a></p>
+    </div>
+    <div class="social-media">
+      <a href="https://facebook.com/" target="_blank" aria-label="Facebook">
+        <img src="gambar/facebook.svg" alt="Facebook">
+      </a>
+      <a href="https://instagram.com/" target="_blank" aria-label="Instagram">
+        <img src="gambar/instagram.svg" alt="Instagram">
+      </a>
+      <a href="https://X.com/" target="_blank" aria-label="YouTube">
+        <img src="gambar/x.svg" alt="X">
+      </a>
+      <a href="https://youtube.com/" target="_blank" aria-label="YouTube">
+        <img src="gambar/youtube.svg" alt="YouTube">
+      </a>
+    </div>
+  </div>
+</footer>
+</html>

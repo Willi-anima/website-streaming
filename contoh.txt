@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Layar Film - Streaming Film Subtitle Indonesia</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-left">
+      <img src="gambar/layarfilm.png" alt="Layar Film" class="logo" />
+    </div>
+    <form class="search-form" onsubmit="return false;">
+      <input type="text" id="searchInput" placeholder="Cari film..." />
+      <button type="submit">Cari</button>
+    </form>
+    <label class="switch">
+      <input type="checkbox" id="themeToggle">
+      <span class="slider"></span>
+    </label>
+  </header>
+  <div class="info-bar">
+    <marquee>
+      <strong>LAYARFILM.XYZ</strong> | Situs streaming film subtitle Indonesia. Bookmark domain ini agar tidak kehilangan akses! 🎥🍿
+    </marquee>
+  </div>
+
+  .info-bar {
+  background-color: #dff6ff;
+  color: #000;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}

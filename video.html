@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detail Video | LayarFilm</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body id="body">
+  <header class="main-header">
+    <a href="index.html" class="logo-link">
+      <img src="gambar/layarfilm.png" alt="LayarFilm" class="logo" />
+    </a>
+    <label class="switch">
+      <input type="checkbox" id="themeToggle">
+      <span class="slider"></span>
+    </label>
+  </header>
+
+  <div class="info-bar">
+    <marquee><strong>LAYARFILM.XYZ</strong> | Streaming film subtitle Indonesia. Jangan Lupa Bookmark Agar Tidak Ketinggalan Update Film Terbaru! Selamat Menonton dan Enjoy 🎥🍿</marquee>
+  </div>
+
+  <div class="container">
+    <main style="padding: 20px;">
+      <div id="videoPlayer" style="margin-bottom: 20px;"></div>
+      <div class="video-detail">
+        <h2 id="videoTitle" class="video-title"></h2>
+        <div id="videoDesc" class="video-desc"></div>
+      </div>
+
+      <hr>
+
+      <h3>Komentar</h3>
+      <div id="commentList"></div>
+
+      <form id="commentForm">
+        <input type="text" id="commentName" placeholder="Nama Anda" required><br><br>
+        <textarea id="commentText" rows="4" placeholder="Tulis komentar..." required></textarea><br><br>
+        <button type="submit">Kirim Komentar</button>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    const body = document.getElementById('body');
+    const toggle = document.getElementById('themeToggle');
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    // Dark mode setup
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      body.classList.add("dark");
+      toggle.checked = true;
+    }
+    toggle.addEventListener('change', () => {
+      body.classList.toggle('dark', toggle.checked);
+      localStorage.setItem("theme", toggle.checked ? "dark" : "light");
+    });
+
+    // Load video
+    if (id) {
+      fetch(`https://api.dailymotion.com/video/${id}?fields=title,description`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("videoTitle").textContent = data.title;
+          document.getElementById("videoDesc").innerHTML = data.description
+            ? `<p>${data.description.replace(/\n/g, "<br>")}</p>`
+            : "<p>Deskripsi tidak tersedia.</p>";
+          document.getElementById("videoPlayer").innerHTML = `
+            <iframe width="100%" height="480"
+              src="https://www.dailymotion.com/embed/video/${id}?autoplay=0"
+              frameborder="0" allowfullscreen>
+            </iframe>`;
+        });
+    }
+
+    // Setup komentar
+    const commentForm = document.getElementById("commentForm");
+    const commentList = document.getElementById("commentList");
+
+    if (commentForm && commentList && id) {
+      loadComments();
+
+      commentForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const name = document.getElementById("commentName").value.trim();
+        const text = document.getElementById("commentText").value.trim();
+        if (!name || !text) return;
+
+        const comment = {
+          name,
+          text,
+          time: new Date().toLocaleString()
+        };
+
+        let comments = JSON.parse(localStorage.getItem("comments_" + id)) || [];
+        comments.push(comment);
+        localStorage.setItem("comments_" + id, JSON.stringify(comments));
+
+        commentForm.reset();
+        loadComments();
+      });
+
+      function loadComments() {
+        const comments = JSON.parse(localStorage.getItem("comments_" + id)) || [];
+        commentList.innerHTML = "";
+        comments.forEach(c => {
+          const div = document.createElement("div");
+          div.className = "comment-item";
+          div.innerHTML = `
+            <div class="name">${c.name} <small style="float:right;">${c.time}</small></div>
+            <div>${c.text}</div>
+          `;
+          commentList.appendChild(div);
+        });
+      }
+    }
+  </script>
+
+    <footer class="main-footer">
+  <div class="footer-container">
+    <div class="footer-text">
+      <p>&copy; 2025 LayarFilm. All rights reserved.</p>
+      <p>Developed by <a href="mailto:layarfilm.dev@gmail.com">layarfilm.dev@gmail.com</a></p>
+    </div>
+    <div class="social-media">
+      <a href="https://facebook.com/" target="_blank" aria-label="Facebook">
+        <img src="gambar/facebook.svg" alt="Facebook">
+      </a>
+      <a href="https://instagram.com/" target="_blank" aria-label="Instagram">
+        <img src="gambar/instagram.svg" alt="Instagram">
+      </a>
+      <a href="https://X.com/" target="_blank" aria-label="YouTube">
+        <img src="gambar/x.svg" alt="X">
+      </a>
+      <a href="https://youtube.com/" target="_blank" aria-label="YouTube">
+        <img src="gambar/youtube.svg" alt="YouTube">
+      </a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
